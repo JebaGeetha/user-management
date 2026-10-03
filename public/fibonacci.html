@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fibonacci Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      padding: 30px;
+    }
+
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 5px;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th { background: #eff6ff; }
+    #message { color: #dc2626; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Fibonacci Table</h1>
+
+    <p>Enter how many Fibonacci numbers you want:</p>
+
+    <input
+      type="number"
+      id="count"
+      min="1"
+      max="100"
+      value="10"
+    >
+
+    <button id="generateBtn">Generate Table</button>
+    <button id="backBtn">Back to Users</button>
+
+    <p id="message" role="status"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Fibonacci Number</th>
+        </tr>
+      </thead>
+      <tbody id="result"></tbody>
+    </table>
+  </div>
+
+  <script>
+    const countInput = document.getElementById("count");
+    const result = document.getElementById("result");
+    const message = document.getElementById("message");
+
+    document.getElementById("generateBtn").addEventListener("click", () => {
+      const count = Number(countInput.value);
+      result.replaceChildren();
+      message.textContent = "";
+
+      if (!Number.isInteger(count) || count < 1 || count > 100) {
+        message.textContent = "Enter a whole number between 1 and 100.";
+        return;
+      }
+
+      let a = 0n;
+      let b = 1n;
+
+      for (let i = 1; i <= count; i++) {
+        const tr = document.createElement("tr");
+        const serialCell = document.createElement("td");
+        const numberCell = document.createElement("td");
+
+        serialCell.textContent = i;
+        numberCell.textContent = a.toString();
+
+        tr.append(serialCell, numberCell);
+        result.appendChild(tr);
+
+        const next = a + b;
+        a = b;
+        b = next;
+      }
+    });
+
+    document.getElementById("backBtn").addEventListener("click", () => {
+      window.location.href = "/users";
+    });
+
+    document.getElementById("generateBtn").click();
+  </script>
+</body>
+</html>
